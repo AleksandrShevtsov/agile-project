@@ -4,7 +4,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from apps.projects.models import Project
+from apps.projects.models.project import Project
 from apps.projects.serializers.project_serializers import AllProjectsSerializer, CreateProjectSerializer
 
 
