@@ -1,4 +1,5 @@
 from django.db import models
+from apps.projects.models.project_file import ProjectFile
 
 
 class Project(models.Model):
