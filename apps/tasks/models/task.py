@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from apps.projects.models.project import Project
 from apps.tasks.choices.statuses import Statuses
-from apps.tasks.choices.priority import Priority
+from apps.tasks.choices.priorities import Priority
 from apps.tasks.utils.set_end_of_month import calculate_end_of_month
 
 
