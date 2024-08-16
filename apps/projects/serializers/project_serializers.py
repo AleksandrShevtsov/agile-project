@@ -1,4 +1,9 @@
-from rest_framework import serializers
+from django.shortcuts import get_object_or_404
+from rest_framework import serializers, status
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from apps.projects.models.project import Project
 
 
@@ -23,5 +28,10 @@ class CreateProjectSerializer(serializers.ModelSerializer):
 
         return value
 
+
+class ProjectDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'name', 'description', 'count_of_files')
 
 
