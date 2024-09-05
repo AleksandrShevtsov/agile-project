@@ -1,23 +1,25 @@
-# В этом файле необходимо создать функции:
-# ● Функция на проверку валидных расширений файла
-# ● Функция на проверку размерности файла (файл не должен быть больше 2 MB)
-# ● Функция на создание пути для сохранения файла
-# ● Функция на сохранение файла (файл должен записываться по частям для избежания
-# потенциальных ошибок и потери данных)
 import os
 from pathlib import Path
+
 
 ALLOWED_EXTENSIONS = ['.csv', '.doc', '.pdf', '.xlsx', '.py']
 
 
-def check_extension(file_name):
-    return Path(file_name).suffix in ALLOWED_EXTENSIONS
+def check_extension(filename):
+    extension = Path(filename).suffix
+
+    if extension not in ALLOWED_EXTENSIONS:
+        return False
+
+    return True
 
 
 def check_file_size(file, required_size=2):
     file_size = file.size / (1024 * 1024)
+
     if file_size > required_size:
         return False
+
     return True
 
 
@@ -25,7 +27,8 @@ def create_file_path(file_name):
     new_file_name, file_ext = file_name.split('.')
 
     file_path = "documents/{}.{}".format(
-        new_file_name,
+        project_name.replace(' ', '_'),
+        new_file_name.replace(' ', '_'),
         file_ext
     )
 
@@ -41,3 +44,6 @@ def save_file(file_path, file_content):
 
     return file_path
 
+
+def delete_file(file_path):
+   os.remove(os.path.realpath(file_path))

@@ -1,1 +1,2 @@
-from apps.projects.models import *
+from .project import *
+from .project_file import *

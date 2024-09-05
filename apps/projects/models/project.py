@@ -1,10 +1,9 @@
 from django.db import models
-from apps.projects.models.project_file import ProjectFile
 
 
 class Project(models.Model):
     name = models.CharField(unique=True, max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     files = models.ManyToManyField('ProjectFile', related_name='project')
 
@@ -15,3 +14,5 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-name']

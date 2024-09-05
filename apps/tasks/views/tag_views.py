@@ -8,7 +8,6 @@ from apps.tasks.serializers.tag_serializers import TagSerializer
 
 
 class TagListAPIView(APIView):
-
     def get_objects(self) -> Tag:
         return Tag.objects.all()
 
@@ -20,6 +19,7 @@ class TagListAPIView(APIView):
                 data=[],
                 status=status.HTTP_204_NO_CONTENT
             )
+
         serializer = TagSerializer(tags, many=True)
 
         return Response(
@@ -50,6 +50,7 @@ class TagDetailAPIView(APIView):
 
     def get(self, request: Request, pk: int) -> Response:
         tag = self.get_object(pk=pk)
+
         serializer = TagSerializer(tag)
 
         return Response(
@@ -59,7 +60,7 @@ class TagDetailAPIView(APIView):
 
     def put(self, request: Request, pk: int) -> Response:
         tag = self.get_object(pk=pk)
-        serializer = TagSerializer(tag, data=request.data)
+        serializer = TagSerializer(instance=tag, data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()

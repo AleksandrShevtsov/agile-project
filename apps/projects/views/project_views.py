@@ -1,17 +1,18 @@
 from datetime import datetime
-
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from apps.projects.models.project import Project
-from apps.projects.serializers.project_serializers import AllProjectsSerializer, CreateProjectSerializer, \
-    ProjectDetailSerializer
+from apps.projects.models import Project
+from apps.projects.serializers.project_serializers import *
+from rest_framework.permissions import IsAuthenticated
+from apps.users.permissions import IsOwnerOrReadOnly
 
 
 class ProjectsListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get_objects(self, date_from=None, date_to=None):
         if date_from and date_to:
             date_from = timezone.make_aware(
@@ -66,6 +67,8 @@ class ProjectsListAPIView(APIView):
 
 
 class ProjectDetailAPIView(APIView):
+    permission_classes = [IsOwnerOrReadOnly]
+
     def get_object(self, pk: int):
         return get_object_or_404(Project, pk=pk)
 
@@ -111,3 +114,4 @@ class ProjectDetailAPIView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
